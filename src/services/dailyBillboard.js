@@ -1,4 +1,6 @@
-const endpoint = '/eastmoney-api/api/data/v1/get'
+const eastmoneyEndpoint = 'https://datacenter-web.eastmoney.com/api/data/v1/get'
+const localProxyEndpoint = '/eastmoney-api/api/data/v1/get'
+const endpoint = import.meta.env.DEV ? localProxyEndpoint : eastmoneyEndpoint
 
 const columns = [
   'TRADE_DATE',

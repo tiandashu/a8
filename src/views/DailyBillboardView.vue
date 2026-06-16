@@ -106,7 +106,13 @@ onMounted(async () => {
         </div>
 
         <div class="grid gap-3 sm:grid-cols-[160px_1fr_auto]">
-          <input v-model="selectedDate" class="field" type="date">
+          <input
+            v-model="selectedDate"
+            class="field"
+            type="date"
+            :disabled="loading"
+            @change="loadData(selectedDate)"
+          >
           <input v-model="keyword" class="field" type="search" placeholder="搜索股票、代码、上榜原因">
           <button
             class="inline-flex items-center justify-center gap-2 rounded bg-[var(--ink)] px-4 py-3 text-[var(--paper)] disabled:opacity-55"
