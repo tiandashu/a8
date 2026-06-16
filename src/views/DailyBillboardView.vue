@@ -32,6 +32,22 @@ const summary = computed(() => {
   )
 })
 
+const topNetBuyRows = computed(() => {
+  return [...rows.value]
+    .filter((row) => row.netAmount > 0)
+    .sort((a, b) => b.netAmount - a.netAmount)
+    .slice(0, 8)
+})
+
+const topNetSellRows = computed(() => {
+  return [...rows.value]
+    .filter((row) => row.netAmount < 0)
+    .sort((a, b) => a.netAmount - b.netAmount)
+    .slice(0, 6)
+})
+
+const maxNetBuy = computed(() => Math.max(...topNetBuyRows.value.map((row) => row.netAmount), 0))
+
 function formatMoney(value) {
   const amount = Number(value || 0)
   const abs = Math.abs(amount)
@@ -147,6 +163,73 @@ onMounted(async () => {
           <p class="text-sm text-[var(--muted)]">更新时间</p>
           <p class="mt-1 text-2xl font-900">{{ formatTime(fetchedAt) }}</p>
         </div>
+      </div>
+
+      <div class="mt-6 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+        <section class="border border-[var(--line)] bg-white/60 p-4">
+          <div class="mb-4 flex items-center justify-between gap-3">
+            <div>
+              <p class="text-sm text-[var(--muted)]">今日主买榜</p>
+              <h2 class="text-xl font-900">净买额前排</h2>
+            </div>
+            <p class="text-sm text-[var(--muted)]">看今天资金主要去了哪几只</p>
+          </div>
+
+          <div class="space-y-3">
+            <div
+              v-for="row in topNetBuyRows"
+              :key="`${row.code}-buy`"
+              class="space-y-2"
+            >
+              <div class="flex items-center justify-between gap-3 text-sm">
+                <div class="min-w-0">
+                  <span class="font-900 text-[var(--ink)]">{{ row.name }}</span>
+                  <span class="ml-2 text-[var(--muted)]">{{ row.code }}</span>
+                </div>
+                <span class="shrink-0 font-900 text-[var(--red)]">{{ formatMoney(row.netAmount) }}</span>
+              </div>
+              <div class="h-2 overflow-hidden rounded-full bg-[rgba(23,19,12,0.08)]">
+                <div
+                  class="h-full rounded-full bg-[linear-gradient(90deg,rgba(182,37,47,0.92),rgba(182,37,47,0.42))]"
+                  :style="{ width: `${Math.max((row.netAmount / (maxNetBuy || 1)) * 100, 6)}%` }"
+                />
+              </div>
+              <div class="flex items-center justify-between text-xs text-[var(--muted)]">
+                <span>{{ row.reason }}</span>
+                <span>{{ formatPercent(row.changeRate) }} · {{ row.market }}</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="border border-[var(--line)] bg-white/60 p-4">
+          <div class="mb-4 flex items-center justify-between gap-3">
+            <div>
+              <p class="text-sm text-[var(--muted)]">今日主卖压力</p>
+              <h2 class="text-xl font-900">净卖额前排</h2>
+            </div>
+            <p class="text-sm text-[var(--muted)]">这些通常是资金撤出的方向</p>
+          </div>
+
+          <div class="space-y-3">
+            <div
+              v-for="row in topNetSellRows"
+              :key="`${row.code}-sell`"
+              class="border-b border-[var(--line)] pb-3 last:border-b-0 last:pb-0"
+            >
+              <div class="flex items-center justify-between gap-3 text-sm">
+                <div class="min-w-0">
+                  <span class="font-900 text-[var(--ink)]">{{ row.name }}</span>
+                  <span class="ml-2 text-[var(--muted)]">{{ row.code }}</span>
+                </div>
+                <span class="shrink-0 font-900 text-[var(--green)]">{{ formatMoney(row.netAmount) }}</span>
+              </div>
+              <div class="mt-1 text-xs text-[var(--muted)]">
+                {{ row.reason }} · {{ row.seatSummary }}
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
 
