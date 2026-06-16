@@ -1,0 +1,64 @@
+:root {
+  --paper: #f7f4ed;
+  --paper-strong: #fffdf7;
+  --ink: #17130c;
+  --muted: #716a5e;
+  --line: #ded7c8;
+  --red: #b6252f;
+  --green: #11755b;
+  --gold: #a46a18;
+  --blue: #1b4f8f;
+  font-family:
+    "Noto Serif SC", "Songti SC", "Source Han Serif SC", Georgia, serif;
+  color: var(--ink);
+  background:
+    linear-gradient(90deg, rgba(182, 37, 47, 0.06) 1px, transparent 1px),
+    linear-gradient(rgba(23, 19, 12, 0.05) 1px, transparent 1px),
+    var(--paper);
+  background-size: 42px 42px;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.nav-link {
+  border-radius: 4px;
+  color: var(--muted);
+  padding: 8px 12px;
+  text-decoration: none;
+  transition:
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.nav-link:hover,
+.nav-link-active {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.field {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255, 253, 247, 0.82);
+  color: var(--ink);
+  outline: none;
+  padding: 12px 14px;
+}
+
+.field:focus {
+  border-color: rgba(182, 37, 47, 0.55);
+  box-shadow: 0 0 0 3px rgba(182, 37, 47, 0.12);
+}

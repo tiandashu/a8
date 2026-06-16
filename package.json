@@ -1,0 +1,25 @@
+{
+  "name": "a8",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.5.34",
+    "vue-router": "^5.1.0"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "^1.2.113",
+    "@unocss/preset-icons": "^66.7.2",
+    "@unocss/preset-uno": "^66.7.2",
+    "@unocss/reset": "^66.7.2",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "unocss": "^66.7.2",
+    "vite": "^8.0.12",
+    "vite-plugin-pages": "^0.33.3"
+  }
+}
